@@ -29,15 +29,15 @@ Welcome aboard the orbital mining station.
 💸 WITHDRAWAL INFO
 ━━━━━━━━━━━━━━━━━━━━━━━
 💱 Rate: 20,000 CR = $1 USD
-📊 Minimum: 5,000 Credits (= $0.25)
+📊 Minimum: 2,000 Credits (= $0.10)
 ⏱️ Processing: Within 24 hours
 💳 Methods: bKash · Nagad · TON · USDT (TRC20)
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 📢 OFFICIAL CHANNELS
 ━━━━━━━━━━━━━━━━━━━━━━━
-💳 Payment Channel: 👉 @AetherMinePay
-🆘 Support Center: 👉 @AetherMineSupport
+💳 Payment Channel
+🆘 Support Center
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 🎁 BONUS FOR YOU
