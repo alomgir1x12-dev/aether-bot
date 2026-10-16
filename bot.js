@@ -63,8 +63,6 @@ Welcome aboard the orbital mining station.
 🎁 Invite friends → +200 Credits each
 ⚡ Watch ads → +20 Energy free
 
-🔗 Your Invite Link:
-${refLink}
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 ▶️ Tap the button below to launch your station and start earning!
