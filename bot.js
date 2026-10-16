@@ -1,12 +1,31 @@
+const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
-const TOKEN = 'GnNfAmNkrChoDJf2U3T-0IiCtBeVf9yd8';
+
+// Render এর Environment Variable থেকে টোকেন নেবে - হার্ডকোড করো না
+const TOKEN = process.env.BOT_TOKEN || '8816789390:AAEdpaDDbDJBweyzDC9Yj9aV5xVfLODBb34';
 const bot = new TelegramBot(TOKEN, { polling: true });
+
+// 24/7 অনলাইন থাকার জন্য ওয়েব সার্ভার
+const app = express();
+app.get('/', (req, res) => res.send('AETHER MINE Bot is Online'));
+app.listen(process.env.PORT || 3000, () => console.log("Web Server Live"));
+
+// 4 মিনিট পর পর নিজে নিজেকে পিং - যাতে ঘুমিয়ে না যায়
+setInterval(() => {
+  if(process.env.RENDER_EXTERNAL_HOSTNAME){
+    fetch(`https://${process.env.RENDER_EXTERNAL_HOSTNAME}`).catch(()=>{});
+  }
+}, 4 * 60 * 1000);
 
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
+  // রেফার লিংক - ইউজার আনবে
+  const refLink = `https://t.me/AetherMineAppBot/aether?startapp=${msg.from.id}`;
+
   const text = `🛰️ ═══ AETHER MINE ═══ 🛰️
 Hello, Commander! 👨‍🚀
 Welcome aboard the orbital mining station.
+
 🌌 Mine crypto from space. Collect real rewards. Withdraw to your wallet. All inside Telegram!
 
 ━━━━━━━━━━━━━━━━━━━━━━━
@@ -29,15 +48,13 @@ Welcome aboard the orbital mining station.
 💸 WITHDRAWAL INFO
 ━━━━━━━━━━━━━━━━━━━━━━━
 💱 Rate: 20,000 CR = $1 USD
-📊 Minimum: 2,000 Credits (= $0.10)
+📊 Minimum: 5,000 Credits (= $0.25)
 ⏱️ Processing: Within 24 hours
 💳 Methods: bKash · Nagad · TON · USDT (TRC20)
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 📢 OFFICIAL CHANNELS
 ━━━━━━━━━━━━━━━━━━━━━━━
-💳 Payment Channel
-🆘 Support Center
 
 ━━━━━━━━━━━━━━━━━━━━━━━
 🎁 BONUS FOR YOU
@@ -46,6 +63,9 @@ Welcome aboard the orbital mining station.
 🎁 Invite friends → +200 Credits each
 ⚡ Watch ads → +20 Energy free
 
+🔗 Your Invite Link:
+${refLink}
+
 ━━━━━━━━━━━━━━━━━━━━━━━
 ▶️ Tap the button below to launch your station and start earning!
 🌌 Mine the stars. Own the Aether.`;
@@ -53,7 +73,7 @@ Welcome aboard the orbital mining station.
   bot.sendMessage(chatId, text, {
     reply_markup: {
       inline_keyboard: [
-        [{ text: "OPEN MINE ⛏️", url: "https://t.me/AetherMineAppBot/aether" }],
+        [{ text: "OPEN MINE ⛏️", url: refLink }],
         [{ text: "JOIN PAY CHANNEL", url: "https://t.me/AETHER_MINE_PAY" }],
         [{ text: "AETHER SUPPORT", url: "https://t.me/Aether_mine_support" }]
       ]
@@ -61,4 +81,4 @@ Welcome aboard the orbital mining station.
   });
 });
 
-console.log("AETHER MINE Bot Started!");
+console.log("AETHER MINE Bot Started - Clean & 24/7!");
