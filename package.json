@@ -1,12 +1,12 @@
 {
   "name": "aether-bot",
   "version": "1.0.0",
-  "description": "AETHER MINE auto reply bot 24/7",
   "main": "bot.js",
   "scripts": {
     "start": "node bot.js"
   },
   "dependencies": {
-    "node-telegram-bot-api": "^0.61.0"
+    "express": "^4.18.2",
+    "node-telegram-bot-api": "^0.64.0"
   }
 }
