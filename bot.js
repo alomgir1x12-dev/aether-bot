@@ -1,7 +1,7 @@
 const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
 
-const TOKEN = process.env.BOT_TOKEN || '8816789390:AAEdpaDDbDJBweyzDC9Yj9aV5xVfLODBb34';
+const TOKEN = process.env.BOT_TOKEN || '8816789390:AAF6DpXnhL9LdUU5FX5hk0IABZ1qYwmhcic';
 const bot = new TelegramBot(TOKEN, { polling: true });
 
 // 24/7 অনলাইন সার্ভার
