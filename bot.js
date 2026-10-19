@@ -1,22 +1,12 @@
 const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
 
-const TOKEN = process.env.BOT_TOKEN || '8816789390:AAF6DpXnhL9LdUU5FX5hk0IABZ1qYwmhcic';
+const TOKEN = process.env.BOT_TOKEN || '8816789390:AAGW_omZrbQ_pupZg6srTBpKG6wJWXHtbDs';
+const lastMessages = new Map();
 
 const app = express();
 app.get('/', (req, res) => res.send('AETHER MINE Bot is Online'));
 app.listen(process.env.PORT || 3000, () => console.log("Web Server Live"));
-
-// বট চালু করার আগে Webhook ডিলিট করে নেবে, তাহলে আর Conflict হবে না
-const bot = new TelegramBot(TOKEN, { polling: false });
-
-(async () => {
-  try {
-    await bot.deleteWebHook({ drop_pending_updates: true });
-    await bot.startPolling();
-    console.log("AETHER MINE Bot Started - Polling Fixed & 24/7!");
-  } catch(e) { console.log(e) }
-})();
 
 setInterval(() => {
   if(process.env.RENDER_EXTERNAL_HOSTNAME){
@@ -24,14 +14,27 @@ setInterval(() => {
   }
 }, 4 * 60 * 1000);
 
-bot.on('polling_error', (err) => {
-  console.log("Polling error, retrying...", err.code);
-});
+const bot = new TelegramBot(TOKEN, { polling: false });
+(async () => {
+  try {
+    await bot.deleteWebHook({ drop_pending_updates: true });
+    await bot.startPolling();
+    console.log("Bot Started With New Token - Fixed!");
+  } catch(e){ console.log(e) }
+})();
+bot.on('polling_error', (e) => console.log(e.message));
 
-bot.onText(/\/start/, (msg) => {
+bot.onText(/\/start/, async (msg) => {
   const chatId = msg.chat.id;
+  const userId = msg.from.id;
+
+  try { await bot.deleteMessage(chatId, msg.message_id); } catch(e){}
+  if (lastMessages.has(userId)) {
+    try { await bot.deleteMessage(chatId, lastMessages.get(userId)); } catch(e){}
+  }
+
   const welcomeText = `🚀 <b>Welcome to AETHER MINE!</b>
-Your orbital mining journey starts here. ⛏️
+Your orbital mining journey starts here. 🛰️
 
 💎 Deploy Stations & Mine Resources
 📈 Collect USDT, Plasma & Dark Matter
@@ -44,21 +47,22 @@ Your orbital mining journey starts here. ⛏️
 
 ⛏️ Start Mining • Explore Space • Grow Your Balance`;
 
-  bot.sendMessage(chatId, welcomeText, {
+  const sent = await bot.sendMessage(chatId, welcomeText, {
     parse_mode: "HTML",
     reply_markup: {
       inline_keyboard: [
-        [{ text: "⛏️ Open Mining", web_app: { url: "https://t.me/AetherMineAppBot/aether?startapp=mine" } }],
+        [{ text: "⛏️ Open Mining", url: "https://t.me/AetherMineAppBot/aether?startapp=mine" }],
         [
-          { text: "⚡ Get Energy", web_app: { url: "https://t.me/AetherMineAppBot/aether?startapp=energy" } },
-          { text: "💸 Withdraw", web_app: { url: "https://t.me/AetherMineAppBot/aether?startapp=balance" } }
+          { text: "⚡ Get Energy", url: "https://t.me/AetherMineAppBot/aether?startapp=energy" },
+          { text: "💸 Withdraw", url: "https://t.me/AetherMineAppBot/aether?startapp=balance" }
         ],
         [
-          { text: "🎁 Referral", web_app: { url: "https://t.me/AetherMineAppBot/aether?startapp=profile" } },
-          { text: "👷 TASK", web_app: { url: "https://t.me/AetherMineAppBot/aether?startapp=crew" } }
+          { text: "🎁 Referral", url: "https://t.me/AetherMineAppBot/aether?startapp=profile" },
+          { text: "👷 TASK", url: "https://t.me/AetherMineAppBot/aether?startapp=crew" }
         ],
         [{ text: "JOIN PAY CHANNEL", url: "https://t.me/AETHER_MINE_PAY" }]
       ]
     }
   });
+  lastMessages.set(userId, sent.message_id);
 });
