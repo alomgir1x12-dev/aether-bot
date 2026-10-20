@@ -2,7 +2,7 @@ const express = require('express');
 const TelegramBot = require('node-telegram-bot-api');
 const app = express();
 
-const TOKEN = '8816789390:AAHRnDzJ_zqEXv9AyCiTK7NMhM9HSNAmDmY';
+const TOKEN = '8816789390:AAEF3StUlGZRwSwWdxGutCu9VumwBbwtPBk';
 const FIREBASE_DB = 'https://aether-13aed-default-rtdb.firebaseio.com';
 const BOT_USERNAME = 'AetherMineAppBot';
 const APP_SHORT_NAME = 'aether';
