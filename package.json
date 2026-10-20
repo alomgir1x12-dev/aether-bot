@@ -1,10 +1,10 @@
 {
-  "name": "aether-bot",
+  "name": "aether-mine-bot",
   "version": "1.0.0",
-  "description": "AETHER MINE Bot",
-  "main": "index.js",
+  "description": "AETHER MINE Bot @AetherMineAppBot",
+  "main": "bot.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node bot.js"
   },
   "dependencies": {
     "express": "^4.18.2",
